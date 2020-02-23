@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.dao.RoomDao">
+
+    <resultMap id="roomResultMap" type="com.dream.entity.Room">
+        <id column="id" property="id"/> 
+        <result column="status" property="status"/> 
+        <result column="details" property="details"/> 
+        <result column="num" property="num"/> 
+        <result column="money" property="money"/> 
+        <result column="checkin" property="checkin"/> 
+        <result column="userid" property="userid"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="roomColumns">
+        room.id AS "id",
+        room.status AS "status",
+        room.details AS "details",
+        room.num AS "num",
+        room.money AS "money",
+        room.checkin AS "checkin",
+        room.userid AS "userid"
+    </sql>
+
+    <sql id="roomJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="roomResultMap">
+        SELECT
+        <include refid="roomColumns" />
+        FROM room <include refid="roomJoins" />
+        <where>
+        room.id = #{id}
+        </where>
+    </select>
+
+    <select id="findList" resultMap="roomResultMap">
+        SELECT
+        <include refid="roomColumns" />
+        FROM room <include refid="roomJoins" />
+        <where>
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="roomResultMap">
+        SELECT
+        <include refid="roomColumns" />
+        FROM room <include refid="roomJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO room(
+            id,
+            status,
+            details,
+            num,
+            money,
+            checkin,
+            userid
+        )
+        VALUES (
+            #{id},
+            #{status},
+            #{details},
+            #{num},
+            #{money},
+            #{checkin},
+            #{userid}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO room(
+            id,
+            status,
+            details,
+            num,
+            money,
+            checkin,
+            userid
+        )
+        VALUES
+        <foreach collection ="list" item="room" separator =",">
+        (
+            #{room.id},
+            #{room.status},
+            #{room.details},
+            #{room.num},
+            #{room.money},
+            #{room.checkin},
+            #{room.userid}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE room SET
+        id = #{id},
+        status = #{status},
+        details = #{details},
+        num = #{num},
+        money = #{money},
+        checkin = #{checkin},
+        userid = #{userid}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM room
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.dao.UsersDao">
+
+    <resultMap id="usersResultMap" type="com.dream.entity.Users">
+        <id column="id" property="id"/> 
+        <result column="phone" property="phone"/> 
+        <result column="name" property="name"/> 
+        <result column="card" property="card"/> 
+        <result column="power" property="power"/> 
+        <result column="password" property="password"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="usersColumns">
+        users.id AS "id",
+        users.phone AS "phone",
+        users.name AS "name",
+        users.card AS "card",
+        users.power AS "power",
+        users.password AS "password"
+    </sql>
+
+    <sql id="usersJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="usersResultMap">
+        SELECT
+        <include refid="usersColumns" />
+        FROM users <include refid="usersJoins" />
+        <where>
+        users.id = #{id}
+        </where>
+    </select>
+
+    <select id="findList" resultMap="usersResultMap">
+        SELECT
+        <include refid="usersColumns" />
+        FROM users <include refid="usersJoins" />
+        <where>
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="usersResultMap">
+        SELECT
+        <include refid="usersColumns" />
+        FROM users <include refid="usersJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO users(
+            id,
+            phone,
+            name,
+            card,
+            power,
+            password
+        )
+        VALUES (
+            #{id},
+            #{phone},
+            #{name},
+            #{card},
+            #{power},
+            #{password}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO users(
+            id,
+            phone,
+            name,
+            card,
+            power,
+            password
+        )
+        VALUES
+        <foreach collection ="list" item="users" separator =",">
+        (
+            #{users.id},
+            #{users.phone},
+            #{users.name},
+            #{users.card},
+            #{users.power},
+            #{users.password}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE users SET
+        id = #{id},
+        phone = #{phone},
+        name = #{name},
+        card = #{card},
+        power = #{power},
+        password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM users
+        WHERE id = #{id}
+    </update>
+
+</mapper>

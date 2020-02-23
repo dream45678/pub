@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.dao.RecordDao">
+
+    <resultMap id="recordResultMap" type="com.dream.entity.Record">
+        <id column="id" property="id"/> 
+        <result column="username" property="username"/> 
+        <result column="card" property="card"/> 
+        <result column="checkin" property="checkin"/> 
+        <result column="checkout" property="checkout"/> 
+        <result column="money" property="money"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="recordColumns">
+        record.id AS "id",
+        record.username AS "username",
+        record.card AS "card",
+        record.checkin AS "checkin",
+        record.checkout AS "checkout",
+        record.money AS "money"
+    </sql>
+
+    <sql id="recordJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="recordResultMap">
+        SELECT
+        <include refid="recordColumns" />
+        FROM record <include refid="recordJoins" />
+        <where>
+        record.id = #{id}
+        </where>
+    </select>
+
+    <select id="findList" resultMap="recordResultMap">
+        SELECT
+        <include refid="recordColumns" />
+        FROM record <include refid="recordJoins" />
+        <where>
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="recordResultMap">
+        SELECT
+        <include refid="recordColumns" />
+        FROM record <include refid="recordJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO record(
+            id,
+            username,
+            card,
+            checkin,
+            checkout,
+            money
+        )
+        VALUES (
+            #{id},
+            #{username},
+            #{card},
+            #{checkin},
+            #{checkout},
+            #{money}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO record(
+            id,
+            username,
+            card,
+            checkin,
+            checkout,
+            money
+        )
+        VALUES
+        <foreach collection ="list" item="record" separator =",">
+        (
+            #{record.id},
+            #{record.username},
+            #{record.card},
+            #{record.checkin},
+            #{record.checkout},
+            #{record.money}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE record SET
+        id = #{id},
+        username = #{username},
+        card = #{card},
+        checkin = #{checkin},
+        checkout = #{checkout},
+        money = #{money}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM record
+        WHERE id = #{id}
+    </update>
+
+</mapper>
